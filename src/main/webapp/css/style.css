@@ -1,0 +1,43 @@
+body {
+  background-color: #faf9df;
+}
+header {
+  text-align: center;
+  width: auto;
+}
+.tableFull {
+  background-color: #cddef6;
+}
+table {
+  width: 100%;
+}
+table, th, td {
+  border: 1px solid black;
+}
+#fieldDate {
+  width: 5%;
+}
+#fieldComposition {
+  width: 10%;
+}
+#fieldNumber {
+  width: 5%;
+}
+#fieldProceedingsNumber {
+  width: 5%;
+}
+#fieldParties {
+  width: 15%;
+}
+#fieldGist {
+  width: auto;
+}
+#fieldForm {
+  width: 5%;
+}
+#fieldBox {
+  width: 3%;
+}
+td {
+  text-align: center;
+}
