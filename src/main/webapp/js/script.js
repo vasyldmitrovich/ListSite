@@ -6,7 +6,12 @@ xhr.onreadystatechange = function() {
         return;
     }
     const response = xhr.responseText;
-    console.log(response);
+    var arrObjects  = JSON.parse(response);
+    var result;
+    for (var i=0; i < arrObjects.length; i++) {
+        result += arrObjects[i].dateAndTime+"<br>";
+        document.getElementById("demo").innerHTML = result;
+    }
     document.getElementById("demo1").innerHTML = response;
 }
 xhr.send();

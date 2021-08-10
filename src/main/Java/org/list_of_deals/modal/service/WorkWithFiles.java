@@ -56,13 +56,12 @@ public class WorkWithFiles {
             xssfWorkbook = new XSSFWorkbook(fileInputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println(e);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println(e);
         }
 
         //Parse the first sheet of the input file into an object model; Розбираємо перший лист на обєктну модель
+        assert xssfWorkbook != null;
         Sheet sheet = xssfWorkbook.getSheetAt(0);
         Iterator<Row> iterator = sheet.iterator();
 
@@ -80,7 +79,7 @@ public class WorkWithFiles {
 
                     //Condition is data String or not;
                         switch (cellType) {
-                            case BLANK:;break;
+                            case BLANK:break;
                             case STRING:
                                 switch (cell.getColumnIndex()) {
                                     case 0: courtCase.setDateAndTime(cell.getStringCellValue());break;

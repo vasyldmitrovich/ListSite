@@ -48,7 +48,6 @@ public class ReedWrite {
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            System.out.println(e);
         }
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("This is jsom: "+jsonString.toString());

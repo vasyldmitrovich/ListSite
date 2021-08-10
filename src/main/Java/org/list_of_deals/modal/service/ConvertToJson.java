@@ -18,7 +18,6 @@ public class ConvertToJson {
                 .writeValueAsString(arrayList));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            System.out.println(e);
         }
         return jsonString.toString();
     }
