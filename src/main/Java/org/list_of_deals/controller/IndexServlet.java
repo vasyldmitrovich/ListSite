@@ -16,7 +16,7 @@ public class IndexServlet extends HttpServlet {
         //resp.setCharacterEncoding("UTF-8");
 
         resp.setContentType("text/html;charset=UTF-8");
-
+        //TODO Не працює кодування на сторінці виводить ієрогліфи
         getServletContext().getRequestDispatcher("/view/index.html").forward(req,resp);
 
     }
