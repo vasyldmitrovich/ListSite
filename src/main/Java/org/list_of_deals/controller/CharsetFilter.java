@@ -1,8 +1,15 @@
 package org.list_of_deals.controller;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+@WebFilter(
+        filterName = "CharsetFilter",
+        urlPatterns = "/*",
+        initParams = @WebInitParam(name = "requestEncoding", value = "UTF-8")
+)
 public class CharsetFilter implements Filter {
 
     private String encoding;

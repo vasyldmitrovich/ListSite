@@ -5,6 +5,7 @@ import org.list_of_deals.modal.service.ConvertToJson;
 import org.list_of_deals.modal.service.WorkWithFiles;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+@WebServlet(
+        name = "JsonResponse",
+        urlPatterns = "/jsonResponse"
+)
 public class JsonRespServlet extends HttpServlet {
 
     public static String fileLocation = "C:\\\\04.08.21_rewrite.xlsx";

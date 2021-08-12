@@ -1,5 +1,5 @@
 //Get json array from server on this url
-const requestURL = 'http://srv:8080/ListSite/jsonResponse';
+const requestURL = 'http://DT176:8080/jsonResponse';
 const xhr = new XMLHttpRequest();
 xhr.open('GET', requestURL);
 xhr.onreadystatechange = function() {

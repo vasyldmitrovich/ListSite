@@ -9,7 +9,7 @@
 </head>
 <body>
 <header>
-    <h1 style="background-color: #0dcaf0">Список справ призначених до розгляду!!!</h1>
+    <h1>Список справ призначених до розгляду</h1>
 </header>
 <div class="tableFull">
     <table id="test">
@@ -32,10 +32,10 @@
 <%--    <div id="demo">There will be demo data</div>--%>
 </div>
 <br>
-<a href="/ListSite/ind">To next page "index.html"</a>
+<a href="/ind">To next page "index.html"</a>
 
 <br>
-<a href="/ListSite/jsonResponse">jsonResponse</a>
+<a href="/jsonResponse">jsonResponse</a>
 </body>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
