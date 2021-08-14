@@ -14,30 +14,33 @@ table {
 table, th, td {
   border: 3px solid black;
 }
-#fieldDate {
-  width: 5%;
-}
-#fieldComposition {
-  width: 10%;
-}
-#fieldNumber {
-  width: 5%;
-}
-#fieldProceedingsNumber {
-  width: 5%;
-}
-#fieldParties {
-  width: 15%;
-}
-#fieldGist {
-  width: auto;
-}
-#fieldForm {
-  width: 5%;
-}
-#fieldBox {
-  width: 3%;
-}
 td, th, tr {
   text-align: center;
+}
+
+
+
+.fieldDate {
+  width: 5%;
+}
+.fieldComposition {
+  width: 10%;
+}
+.fieldNumber {
+  width: 5%;
+}
+.fieldProceedingsNumber {
+  width: 5%;
+}
+.fieldParties {
+  width: 35%;
+}
+.fieldGist {
+  width: auto;
+}
+.fieldForm {
+  width: 5%;
+}
+.fieldBox {
+  width: 3%;
 }
