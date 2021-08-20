@@ -5,8 +5,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @WebServlet(
         name = "IndexServlet",
@@ -21,28 +27,31 @@ public class IndexServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         realPatch = getServletContext().getRealPath("");
-        System.out.println(realPatch+" This is real patch to view");
     }
-
-    //TODO patch variable where will be url to exist file excel
-    //TODO fileLocation variable and add this variable to resp
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        //resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html;charset=UTF-8");
 
-        System.out.println("From indexServlet method doGet "+getServletContext().getRealPath("/view/"));
+        String patch1 = getServletContext().getRealPath(File.separator+"view"+File.separator+"index.html");
+        Path patch = Paths.get(realPatch +"view"+File.separator+"index.html");
+        StringBuilder stringBuilder = new StringBuilder();
+        Charset charset = Charset.forName("UTF-8");
+
+        try (BufferedReader bufferedReader = Files.newBufferedReader(patch,charset)) {
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+            System.out.println("IOException: No html file on disc: "+e);
+        }
 
         PrintWriter printWriter = resp.getWriter();
-        printWriter.println("<html><a href=\"/edit\">To next page \"index.html\"</a>\n" +
-                "\n" +
-                "<br>\n" +
-                "<a href=\"/jsonResponse\">jsonResponse</a></html>");
+        printWriter.println(stringBuilder.toString());
         printWriter.flush();
-
-        //getServletContext().getRequestDispatcher("/view/index.html").forward(req,resp);
 
     }
 }
