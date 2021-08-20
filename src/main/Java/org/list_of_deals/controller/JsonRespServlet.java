@@ -19,7 +19,7 @@ import java.util.ArrayList;
 )
 public class JsonRespServlet extends HttpServlet {
 
-    public static String fileLocation = "C:\\\\04.08.21_rewrite.xlsx";
+    public static String fileLocation = "\\\\srv3\\pryznachennya\\SpusokSprav.xlsx";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
