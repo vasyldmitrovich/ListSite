@@ -9,18 +9,78 @@
           crossorigin="anonymous">
 
     <style>
+        html {
+            background-color: #a0a0a0;
+            height: 100%;
+        }
         body {
-            background-color: #faf9df;
+            height: 100%;
+            margin: 5px;
         }
-        header {
-            text-align: center;
-            width: auto;
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            overflow: auto;
+            min-height: 100%;
+            height: 100%;
+            margin: 5px;
         }
-        .tableFull {
-            background-color: #cddef6;
+        .content {
+            flex: 1 0 auto;
+            margin: 5px;
+            background-color: #d9e0f1;
+            height: 86%;
         }
+                  #navigationFromBootstrap {
+                    margin: 5px;
+                  }
+                  .headerOneLine {
+                    display: flex;
+                    flex-direction: column;
+                    height: 5vh;
+                    margin: 5px;
+                    text-align: center;
+                    font-size: 3vh;
+
+                  }
+                  .tableWithData {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    height: 82%;
+                    margin: 5px;
+                    font-size: 2.5vh;
+                }
+        .footer {
+          flex: 0 0 35px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          overflow: hidden;
+          background-color: #d9e0f1;
+          margin: 5px;
+          text-align: center;
+
+        }
+              .addressAndSite {
+                text-align: left;
+                overflow: hidden;
+                height: auto;
+                width: 40%;
+                margin: 5px;
+              }
+              .linkToEmail {
+                text-align: right;
+                overflow: hidden;
+                height: auto;
+                width: 40%;
+                margin: 5px;
+              }
         table {
             width: 100%;
+            height: 100%;
+            background-color: #b9cbf7;
         }
         table, th, td {
             border: 3px solid black;
@@ -28,8 +88,9 @@
         td, th, tr {
             text-align: center;
         }
-
-
+        th {
+          height: 4%;
+        }
 
         .fieldDate {
             width: 5%;
@@ -49,28 +110,65 @@
         .fieldGist {
             width: auto;
         }
-        .fieldForm {
-            width: 5%;
-        }
         .fieldBox {
             width: 3%;
         }
-
     </style>
     <title>Список справ</title>
 </head>
 <body>
-<header>
-    <h1>Список справ призначених до розгляду</h1>
-</header>
-<div class="tableFull">
-    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner" id="dataTableAndCarousel">
+  <div class="wrapper">
+    <div class="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navigationFromBootstrap">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Івано-Франківський апеляційний суд</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Громадянам
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Список справ призначених до розгляду</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Пошук" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Пошук</button>
+              </form>
+            </div>
+          </div>
+        </nav>
 
+      <div class="headerOneLine">
+        <b>Список справ призначених до розгляду</b>
+      </div>
+
+      <div class="tableWithData">
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="height: 100%">
+            <div class="carousel-inner" id="dataTableAndCarousel" style="height: 100%">
+
+            </div>
         </div>
+      </div>
+
     </div>
-</div>
-<br>
+    <div class="footer">
+      <div class="addressAndSite">
+        Адреса 76018, м.Івано-Франківськ, вул. Грюнвальдська, 11
+        <a href="https://ifa.court.gov.ua/sud4808/">ifa.court.gov.ua</a>
+      </div>
+      <div class="linkToEmail">
+        E-mail:
+        <a href="mailto:inbox@ifa.court.gov.ua">inbox@ifa.court.gov.ua</a>
+      </div>
+    </div>
+  </div>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
@@ -92,7 +190,7 @@
         //After that parse Json and write on site in table
         const arrObjects = JSON.parse(response);
         var lengthObjects = arrObjects.length;
-        var rowsOnPage = 7;//How many rows must to be on one pages
+        var rowsOnPage = 5;//How many rows must to be on one pages
         var count = 0;
         var countPages = 0;//How mane pages we will have in the end, that need for build carousel
         do {
@@ -154,7 +252,7 @@
             "</tr>";
     }
     function headFirstPageCarouselAndTable() {
-        return "<div class=\"carousel-item active\" data-bs-interval=\"10000\">\n" +
+        return "<div class=\"carousel-item active\" data-bs-interval=\"10000\" style=\"height: 100%\">\n" +
             "                <table class=\"test\">\n" +
             "                    <tr>\n" +
             "                        <th class=\"fieldDate\">Дата/Час</th>\n" +
@@ -167,7 +265,7 @@
             "                    </tr>";
     }
     function headCarouselAndTable() {
-        return "<div class=\"carousel-item\" data-bs-interval=\"10000\">\n" +
+        return "<div class=\"carousel-item\" data-bs-interval=\"10000\" style=\"height: 100%\">\n" +
             "                <table class=\"test\">\n" +
             "                    <tr>\n" +
             "                        <th class=\"fieldDate\">Дата/Час</th>\n" +
@@ -188,7 +286,6 @@
     // function f(){
     //     console.log("set int");
     // }
-
 
 </script>
 </html>

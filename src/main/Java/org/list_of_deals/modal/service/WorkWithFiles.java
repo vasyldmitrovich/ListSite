@@ -93,6 +93,9 @@ public class WorkWithFiles {
                         }
                 }
                 if (courtCase.getCaseNumber() != null) {
+                    if (courtCase.getCourtroom() == null) {
+                        courtCase.setCourtroom("");
+                    }
                     arrayListCases.add(courtCase);
                 }
             }
