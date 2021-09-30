@@ -20,6 +20,8 @@ import java.util.ArrayList;
 public class JsonRespServlet extends HttpServlet {
 
     public static String fileLocation = "\\\\srv3\\pryznachennya\\SpusokSprav.xlsx";
+    public static String dateFormat = "dd.MM.yyyy HH:mm";
+    public static int maxLengthStr = 230;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,10 +32,10 @@ public class JsonRespServlet extends HttpServlet {
         //Create list courtCase what we read from file
         WorkWithFiles workWithFiles = new WorkWithFiles();
         ArrayList<CourtCase> casesArrayList;
-        casesArrayList = workWithFiles.readFromExcelFile(fileLocation);
+        casesArrayList = workWithFiles.readFromExcelFile(fileLocation,dateFormat,maxLengthStr);
 
         ConvertToJson convertToJson = new ConvertToJson();
-        String jsonToFrontend = convertToJson.arrCourtCaseToJson(casesArrayList);
+        String jsonToFrontend = convertToJson.arrCourtCaseToJson(casesArrayList, dateFormat);
 
         PrintWriter printWriter = resp.getWriter();
         printWriter.println(jsonToFrontend);
