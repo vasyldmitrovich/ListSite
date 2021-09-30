@@ -1,23 +1,26 @@
 package org.list_of_deals.modal.entity;
 
-//This class describe Case intended for consideration
-public class CourtCase implements Comparable<CourtCase>{
+import java.util.Comparator;
+import java.util.Date;
 
-    private String dateAndTime;
+//This class describe Case intended for consideration
+public class CourtCase implements Comparator <CourtCase>, Comparable<CourtCase> {
+
+    private Date dateAndTime;
     private String judges;
-    private String caseNumber;//Номер справи
-    private String proceedingsNumber;//Номер провадження
-    private String claimantDefendant;//The parties to the case; Сторони по справі
+    private String caseNumber;//Number of case
+    private String proceedingsNumber;//Number of proceedings
+    private String claimantDefendant;//The parties to the case
     private String gistClaim; //The essence of the lawsuit; Суть позову
-    private String courtroom; //Зал судових засідань
+    private String courtroom;
 
     public CourtCase(){}
 
-    public String getDateAndTime() {
+    public Date getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(String dateAndTime) {
+    public void setDateAndTime(Date dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 
@@ -91,11 +94,14 @@ public class CourtCase implements Comparable<CourtCase>{
                 ", courtroom='" + courtroom + '\'' +
                 '}';
     }
-    //TODO need method what we will call from compareTo and that method separate field dateAndTime 04.08.2021 08:30
-    //because i must sort only time
+
+    @Override
+    public int compare(CourtCase o1, CourtCase o2) {
+        return o1.getDateAndTime().compareTo(o2.getDateAndTime());
+    }
 
     @Override
     public int compareTo(CourtCase o) {
-        return 0;
+        return getDateAndTime().compareTo(o.getDateAndTime());
     }
 }
