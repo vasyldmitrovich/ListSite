@@ -50,7 +50,7 @@
                     align-items: stretch;
                     height: 82%;
                     margin: 5px;
-                    font-size: 2.5vh;
+                    font-size: 2.2vh;
                 }
         .footer {
           flex: 0 0 35px;
@@ -99,16 +99,16 @@
             width: 10%;
         }
         .fieldNumber {
-            width: 5%;
+            width: 6%;
         }
         .fieldProceedingsNumber {
-            width: 5%;
+            width: 10%;
         }
         .fieldParties {
-            width: 35%;
+            width: auto;
         }
         .fieldGist {
-            width: auto;
+            width: 17%;
         }
         .fieldBox {
             width: 3%;
@@ -151,6 +151,10 @@
       <div class="tableWithData">
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="height: 100%">
             <div class="carousel-inner" id="dataTableAndCarousel" style="height: 100%">
+<!--TODO add carousels images on page-->
+<!--              <div class="carousel-item" data-bs-interval="10000" style="height: 100%">-->
+<!--                <img src="\\srv3\pryznachennya\picture\slide1.png" class="d-block w-100" alt="...">-->
+<!--              </div>-->
 
             </div>
         </div>
@@ -159,7 +163,7 @@
     </div>
     <div class="footer">
       <div class="addressAndSite">
-        Адреса 76018, м.Івано-Франківськ, вул. Грюнвальдська, 11
+        Адреса м.Івано-Франківськ, вул. Грюнвальдська, 11, 76018
         <a href="https://ifa.court.gov.ua/sud4808/">ifa.court.gov.ua</a>
       </div>
       <div class="linkToEmail">
@@ -190,9 +194,9 @@
         //After that parse Json and write on site in table
         const arrObjects = JSON.parse(response);
         var lengthObjects = arrObjects.length;
-        var rowsOnPage = 5;//How many rows must to be on one pages
+        var rowsOnPage = 4;//How many rows must to be on one pages
         var count = 0;
-        var countPages = 0;//How mane pages we will have in the end, that need for build carousel
+        var countPages = 0;//How many pages we will have in the end, that need for build carousel
         do {
             count += rowsOnPage;
             countPages++;
@@ -208,26 +212,34 @@
         var count = 0;
         var tempVariable = "";
         var tempHowManyCycles = howManyCycles;
-
         while (tempHowManyCycles !=0) {
+
+            //Use when starting first cycle, because first carousel have different class
             if (tempHowManyCycles == howManyCycles) {
+                //Add top carousel
                 tempVariable = headFirstPageCarouselAndTable();
+                //Add data in that carousel
                 for ( let i=count; i<count+rowsOnPage; i++) {
                     tempVariable += rowInTable(arr,i);
                 }
+                //Add bottom carousel
                 tempVariable += futCarouselAndTable();
                 count += rowsOnPage;
+                //Add that carousel to result,
+                //that result we return on page with all carousels and data in that carousel
                 result += tempVariable;
             }
+            //Use in another cycles without the last
             else if (tempHowManyCycles < howManyCycles && count+rowsOnPage < arr.length) {
-                tempVariable = headCarouselAndTable();
                 for ( let j=count; j<count+rowsOnPage; j++) {
                     tempVariable += rowInTable(arr,j);
                 }
                 tempVariable += futCarouselAndTable();
                 count += rowsOnPage;
                 result += tempVariable;
-            } else {
+            }
+            //Use in last cycle
+            else {
                 tempVariable = headCarouselAndTable();
                 for ( let k=count; k<arr.length; k++) {
                     tempVariable += rowInTable(arr,k);
