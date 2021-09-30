@@ -11,9 +11,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class WorkWithFiles {
 
@@ -45,12 +45,13 @@ public class WorkWithFiles {
 
     //In this method we will read .xlsx file on PC
     // and return array objects court cases intended for consideration.
-    public ArrayList<CourtCase> readFromExcelFile(String fileLocation) {
+    public ArrayList<CourtCase> readFromExcelFile(String fileLocation, String dataFormat, int maxLengthStr) {
         ArrayList<CourtCase> arrayListCases = new ArrayList<>();
 
         FileInputStream fileInputStream = null;
         XSSFWorkbook xssfWorkbook = null;
-        //initialize threads; ініціалізуємо потоки
+
+        //initialize threads
         try {
             fileInputStream  = new FileInputStream(new File(fileLocation));
             xssfWorkbook = new XSSFWorkbook(fileInputStream);
@@ -60,7 +61,7 @@ public class WorkWithFiles {
             e.printStackTrace();
         }
 
-        //Parse the first sheet of the input file into an object model; Розбираємо перший лист на обєктну модель
+        //Parse the first sheet of the input file into an object model
         assert xssfWorkbook != null;
         Sheet sheet = xssfWorkbook.getSheetAt(0);
         Iterator<Row> iterator = sheet.iterator();
@@ -82,26 +83,54 @@ public class WorkWithFiles {
                             case BLANK:break;
                             case STRING:
                                 switch (cell.getColumnIndex()) {
-                                    case 0: courtCase.setDateAndTime(cell.getStringCellValue());break;
+                                    case 0: courtCase.setDateAndTime(parseDateFromString(cell.getStringCellValue(),dataFormat));break;
                                     case 1: courtCase.setJudges(cell.getStringCellValue());break;
                                     case 2: courtCase.setCaseNumber(cell.getStringCellValue());break;
                                     case 3: courtCase.setProceedingsNumber(cell.getStringCellValue());break;
-                                    case 4: courtCase.setClaimantDefendant(cell.getStringCellValue());break;
+                                    case 4: courtCase.setClaimantDefendant(maxLengthString(cell.getStringCellValue(),maxLengthStr));break;
                                     case 5: courtCase.setGistClaim(cell.getStringCellValue());break;
                                     case 6: courtCase.setCourtroom(cell.getStringCellValue());break;
                                 }
                         }
                 }
+                //See is object empty or not
                 if (courtCase.getCaseNumber() != null) {
-                    if (courtCase.getCourtroom() == null) {
-                        courtCase.setCourtroom("");
-                    }
+                    if (courtCase.getJudges() == null) courtCase.setJudges("");
+                    if (courtCase.getProceedingsNumber() == null) courtCase.setProceedingsNumber("");
+                    if (courtCase.getClaimantDefendant() == null) courtCase.setClaimantDefendant("");
+                    if (courtCase.getGistClaim() == null) courtCase.setGistClaim("");
+                    if (courtCase.getCourtroom() == null) courtCase.setCourtroom("");
+
                     arrayListCases.add(courtCase);
                 }
             }
         }
-        //TODO sort array list for field data and time
-
+        //Sort array of objects on field of date
+        Collections.sort(arrayListCases);
         return arrayListCases;
+    }
+
+    private static Date parseDateFromString (String string, String dataFormat) {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dataFormat);
+        if (string != null) {
+            try {
+                date = simpleDateFormat.parse(string);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return date;
+    }
+
+    private static String maxLengthString (String string, int maxLength) {
+        if (string != null && string.length() > maxLength) {
+            string = string.substring(0,maxLength);
+            string.trim();
+            int lastSpaceInStr = string.lastIndexOf(" ");
+            string = string.substring(0,lastSpaceInStr);
+            string += " ...";
+        }
+        return string;
     }
 }
