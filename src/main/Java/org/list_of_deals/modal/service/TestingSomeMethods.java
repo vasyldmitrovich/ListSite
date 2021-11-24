@@ -5,7 +5,13 @@ import java.util.Arrays;
 
 /*Class for testing some logic*/
 public class TestingSomeMethods {
+
     public static void main(String[] args) {
+        runMethods();
+
+    }
+
+    public static void runMethods() {
         System.out.println("Middle of three number is:\t " + middleOfThree("4", "6", "9"));
         System.out.println("To do Match.abc, but do Trial operation:\t " + mathAbsButTrialOperation(-35.7));
         System.out.println("From fahrenheit to celsius:\t " + fahrenheitToCelsius(-90));
@@ -13,13 +19,91 @@ public class TestingSomeMethods {
         System.out.println("Factorial like example recursion:\t " + factorialUseRecursion(5));
         int[] arrIntSmall = {6, 1, 9, 2, 44, 92, 22, 14, -3, -6};
         System.out.println("Minimal value in array:\t " + minValueInArr(arrIntSmall));
+        System.out.println("Arr after sort is: " + Arrays.toString(bubbleSort(arrIntSmall)));
+        System.out.println("___!___");
+
+        int[][] intsArr = new int[5][8];
+        intsArr = addRandomIntInDecimalArr(intsArr);
+        int[][] resultArr = minAndMaxInArr(intsArr);
+        System.out.println("Arr: " + Arrays.deepToString(intsArr));
+        System.out.println("Min and Max value in arr: " + Arrays.deepToString(resultArr));
+
+        int fibonacciInt = 9;
+        System.out.println("Fibonacci " + fibonacciInt + " is: " + fibonacciLogarithmicAlgorithm(fibonacciInt));
+
+        int toBinaryIs = 255;
+        System.out.println("Int " + toBinaryIs + " to Binary: " + toBinary(toBinaryIs));
+
+        int[] nIntArrInvert = invertArr(arrIntSmall);
+        System.out.print("Invert arr is: ");
+        for (int ic : nIntArrInvert
+        ) {
+            System.out.print(ic + "\t");
+        }
         System.out.println();
-        int[][] arrIntDecimal = new int[6][4];
-        arrIntDecimal = addRandomIntInDecimalArr(arrIntDecimal);
-        System.out.println(Arrays.deepToString(arrIntDecimal));
-        System.out.println("____________________");
 
+        int searchObject = 9;
+        System.out.println("Binary search " + searchObject + " index is: " + binarySearch(arrIntSmall, searchObject));
 
+    }
+
+    public static int[] invertArr(int[] arr) {
+        for (int i = 0; i < arr.length / 2; i++) {
+            int tmp = arr[i];
+            arr[i] = arr[arr.length - i - 1];
+            arr[arr.length - i - 1] = tmp;
+        }
+        return arr;
+    }
+
+    public static String toBinary(int x) {
+        String binary = "";
+        while (x > 0) {
+            binary = (x % 2) + binary;
+            x /= 2;
+        }
+        return binary;
+    }
+
+    public static long fibonacciLogarithmicAlgorithm(int toN) {
+        if (toN <= 1) {
+            return 1;
+        }
+        return fibonacciLogarithmicAlgorithm(toN - 2) + fibonacciLogarithmicAlgorithm(toN - 1);
+    }
+
+    public static long fibonacciLinearAlgorithm(int toN) {
+        long first = 0;
+        long second = 1;
+        long result = toN;
+        for (int i = 1; i < toN; i++) {
+            result = first + second;
+            first = second;
+            second = result;
+        }
+        return result;
+    }
+
+    public static int[][] minAndMaxInArr(int[][] intsArr) {
+        int[][] resultArr = new int[intsArr.length][2];
+        for (int i = 0; i < intsArr.length; i++) {
+            int valueMin = intsArr[i][0];
+            int valueMax = intsArr[i][1];
+            int indexMinIs = 0;
+            int indexMaxIs = 0;
+            for (int j = 1; j < intsArr[i].length; j++) {
+                if (intsArr[i][j] <= valueMin) {
+                    valueMin = intsArr[i][j];
+                    indexMinIs = j;
+                } else if (intsArr[i][j] >= valueMax) {
+                    valueMax = intsArr[i][j];
+                    indexMaxIs = j;
+                }
+            }
+            resultArr[i][0] = intsArr[i][indexMinIs];
+            resultArr[i][1] = intsArr[i][indexMaxIs];
+        }
+        return resultArr;
     }
 
     public static int[][] addRandomIntInDecimalArr(int[][] arr) {
@@ -90,10 +174,28 @@ public class TestingSomeMethods {
         return in * factorialUseRecursion(in - 1);
     }
 
-    public static long timeInMoment() {
-        return System.nanoTime();
+    public static int randomIntFromOneToHundred() {
+        return (int) (Math.random() * 100);
     }
 
+    public static int binarySearch(int[] arr, int search) {
+        int start = 0;
+        int end = arr.length - 1;
+        while (end >= start) {
+            int middle = start + (end - start) / 2;
+            if (arr[middle] == search) {
+                return middle;
+            }
+            if (arr[middle] < search) {
+                start = middle + 1;
+            } else {
+                end = middle - 1;
+            }
+        }
+        return -1;
+    }
+
+    /*Sort algorithms*/
     public static int[] bubbleSort(int[] arr) {
         boolean isSorted = false;
         while (!isSorted) {
@@ -108,8 +210,32 @@ public class TestingSomeMethods {
         return arr;
     }
 
-    public static int randomIntFromOneToHundred() {
-        return (int) (Math.random() * 100);
+    public static void selectionSort(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int indexMin = i;
+            int min = array[i];
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j] < min) {
+                    indexMin = j;
+                    min = array[j];
+                }
+            }
+            array[indexMin] = array[i];
+            array[i] = min;
+        }
     }
+
+    public static void insertionSort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int currenElement = arr[i];
+            int j = i;
+            while (j > 0 && arr[j - 1] > currenElement) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = currenElement;
+        }
+    }
+
 
 }
