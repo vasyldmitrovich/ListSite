@@ -7,23 +7,38 @@ import java.util.Arrays;
 public class TestingSomeMethods {
 
     public static void main(String[] args) {
-        runMethods();
+        //Methods in this class
+        runFunnyMethods();
+
+        //Work with sort algorithm
+        WorkWithSortingAlgorithms.testingSortMethods();
 
     }
 
-    public static void runMethods() {
-        System.out.println("Middle of three number is:\t " + middleOfThree("4", "6", "9"));
-        System.out.println("To do Match.abc, but do Trial operation:\t " + mathAbsButTrialOperation(-35.7));
-        System.out.println("From fahrenheit to celsius:\t " + fahrenheitToCelsius(-90));
-        System.out.println("Factorial we use cycle for:\t " + factorialUseFor(5));
+    public static void runFunnyMethods() {
+
+        //Change data in two variables without creating third variable
+        int a = 2;
+        int b = 7;
+        System.out.println("a=" + a + " and b=" + b);
+        System.out.println("---------------- a = a + b - (b = a);");
+        a = a + b - (b = a);
+        System.out.println("a=" + a + " and b=" + b);
+
+
+        System.out.println("Middle of three \"4\", \"6\", \"9\" number is:\t " + middleOfThree("4", "6", "9"));
+        System.out.println("To do Match.abc \"-35.7\", but do Trial operation:\t " + mathAbsButTrialOperation(-35.7));
+        System.out.println("From fahrenheit \"-90\" to celsius:\t " + fahrenheitToCelsius(-90));
+        System.out.println("Factorial \"5\" we use cycle for:\t " + factorialUseFor(5));
         System.out.println("Factorial like example recursion:\t " + factorialUseRecursion(5));
+
+
         int[] arrIntSmall = {6, 1, 9, 2, 44, 92, 22, 14, -3, -6};
         System.out.println("Minimal value in array:\t " + minValueInArr(arrIntSmall));
-        System.out.println("Arr after sort is: " + Arrays.toString(bubbleSort(arrIntSmall)));
-        System.out.println("___!___");
+        System.out.println("----------------------");
 
         int[][] intsArr = new int[5][8];
-        intsArr = addRandomIntInDecimalArr(intsArr);
+        addRandomIntInDecimalArr(intsArr);
         int[][] resultArr = minAndMaxInArr(intsArr);
         System.out.println("Arr: " + Arrays.deepToString(intsArr));
         System.out.println("Min and Max value in arr: " + Arrays.deepToString(resultArr));
@@ -34,7 +49,8 @@ public class TestingSomeMethods {
         int toBinaryIs = 255;
         System.out.println("Int " + toBinaryIs + " to Binary: " + toBinary(toBinaryIs));
 
-        int[] nIntArrInvert = invertArr(arrIntSmall);
+        int[] arrIntSmall2 = {6, 1, 9, 2, 44, 92, 22, 14, -3, -6};
+        int[] nIntArrInvert = invertArr(arrIntSmall2);
         System.out.print("Invert arr is: ");
         for (int ic : nIntArrInvert
         ) {
@@ -43,6 +59,7 @@ public class TestingSomeMethods {
         System.out.println();
 
         int searchObject = 9;
+        System.out.println(Arrays.toString(arrIntSmall));
         System.out.println("Binary search " + searchObject + " index is: " + binarySearch(arrIntSmall, searchObject));
 
     }
@@ -106,13 +123,12 @@ public class TestingSomeMethods {
         return resultArr;
     }
 
-    public static int[][] addRandomIntInDecimalArr(int[][] arr) {
+    public static void addRandomIntInDecimalArr(int[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 arr[i][j] = randomIntFromOneToHundred();
             }
         }
-        return arr;
     }
 
     public static int middleOfThree(String str1, String str2, String str3) {
@@ -178,6 +194,10 @@ public class TestingSomeMethods {
         return (int) (Math.random() * 100);
     }
 
+    public static int randomIntFromOneToThousands() {
+        return (int) (Math.random() * 100000);
+    }
+
     public static int binarySearch(int[] arr, int search) {
         int start = 0;
         int end = arr.length - 1;
@@ -194,48 +214,5 @@ public class TestingSomeMethods {
         }
         return -1;
     }
-
-    /*Sort algorithms*/
-    public static int[] bubbleSort(int[] arr) {
-        boolean isSorted = false;
-        while (!isSorted) {
-            isSorted = true;
-            for (int i = 0; i < arr.length - 1; i++) {
-                if (arr[i] > arr[i + 1]) {
-                    isSorted = false;
-                    arr[i] = arr[i] + arr[i + 1] - (arr[i + 1] = arr[i]);
-                }
-            }
-        }
-        return arr;
-    }
-
-    public static void selectionSort(int[] array) {
-        for (int i = 0; i < array.length; i++) {
-            int indexMin = i;
-            int min = array[i];
-            for (int j = i + 1; j < array.length; j++) {
-                if (array[j] < min) {
-                    indexMin = j;
-                    min = array[j];
-                }
-            }
-            array[indexMin] = array[i];
-            array[i] = min;
-        }
-    }
-
-    public static void insertionSort(int[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            int currenElement = arr[i];
-            int j = i;
-            while (j > 0 && arr[j - 1] > currenElement) {
-                arr[j] = arr[j - 1];
-                j--;
-            }
-            arr[j] = currenElement;
-        }
-    }
-
 
 }
