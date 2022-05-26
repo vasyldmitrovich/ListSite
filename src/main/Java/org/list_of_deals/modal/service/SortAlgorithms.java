@@ -99,39 +99,78 @@ public class SortAlgorithms {
      * After that, these arrays are combined with each other, 1 of 2, 2 of 3 etc.
      * When arrays concatenating, we are sorting that's elements
      * And we have many arrays on 2 element
-     * After that, these arrays are combined with each other, and we have many arrays on 4 element etc.
-     * */
+     * After that, these arrays are combined with each other, and we have many arrays on 4 element etc.*/
+    //---------------------------------------------------------------------------------------
+    /* When and why use merge sort?
+     * Merge sort have stability of work compared to quick sort.
+     * Work the same on any data
+     * Quick sort in some situation can work worse, and work with whole array.
+     * Merge sort work from smaller arrays and after that with bigger and bigger arrays.
+     * Merge sort can use where we do not have all data.
+     * For example, download over the network, we do not have all the data
+     * we can download part and sort that part, after that download next part and sort that part
+     * and after that merge that two data.
+     * Another example is: we can divide, for example to 4 part and put sort into separate Threads
+     * and after that concat that arrays*/
     public static void mergeSort(int[] array) {
         int[] tmp;
-        int[] currentSrc = array;
-        int[] currentDest = new int[array.length];
+        int[] currentSrc = array;//Where do we come from
+        int[] currentDest = new int[array.length];//Where we will merge
 
-        int size = 1;
+        int size = 1;//Size merge arrays
+        //When the size of the array into which we will merge is smaller than 'array'
         while (size < array.length) {
+            //In that loop we go through array and the index 'i' jumps over pairs of arrays
             for (int i = 0; i < array.length; i += 2 * size) {
+                //And we merge these pairs of arrays in one bigger sorted array
                 merge(currentSrc, i, currentSrc, i + size, currentDest, i, size);
             }
 
+            /*After arrays merged in array Destination
+             * Array Src and array Dest change
+             * That means on next step we Dest array will be Src array, so
+             * we will merge arrays witch we have taken on privies step witch each other*/
             tmp = currentSrc;
             currentSrc = currentDest;
             currentDest = tmp;
 
-            size = size * 2;
+            size = size * 2;//On each step length * 2
 
             System.out.println("array = " + Arrays.toString(currentSrc));
         }
     }
 
+    //---------------------------------------------------------------------------------------
+    /* Implements merging two arrays into one array
+     * Does not create an array, and do merging of subarrays in the same array
+     * We have first array 'int[] src1' and 'int src1Start' from which element to start merging from this array
+     * 'int[] src2' second array and 'int src2Start' from which element second array to start merging
+     * And array destination 'int[] dest' and 'int destStart' from which element to start writing to this array
+     * 'int size' show what size subarrays we want to merge*/
     private static void merge(int[] src1, int src1Start, int[] src2, int src2Start, int[] dest, int destStart, int size) {
+
         int index1 = src1Start;
         int index2 = src2Start;
 
+        /* The arrays that we combine are subarrays in a large array
+         * you need to count the ends of the subarray,
+         * taking into account the boundaries of the array in which these subarrays are*/
         int src1End = Math.min(src1Start + size, src1.length);
         int src2End = Math.min(src2Start + size, src2.length);
 
+        /*How many iteration need for concat two subarrays*/
         int iterationCount = src1End - src1Start + src2End - src2Start;
 
+        /*Run cycle*/
         for (int i = destStart; i < destStart + iterationCount; i++) {
+            /*if element in first array less than in second array
+             * write in destination array element from fist subarray and index1++
+             * else write in destination array element from second subarray and index2++
+             *
+             * That expression 'index1 < src1End && (index2 >= src2End' use in situation
+             * when in first or second subarray elements end
+             * We can be in if expression, not else only if 'index1 < src1End'
+             * On second subarray we in the end, than we can be onle in if expression, not else*/
             if (index1 < src1End && (index2 >= src2End || src1[index1] < src2[index2])) {
                 dest[i] = src1[index1];
                 index1++;
@@ -143,17 +182,27 @@ public class SortAlgorithms {
     }
 
     //---------------------------------------------------------------------------------------
-    /*Quick sort
-     * Take some elements
-     * Divide on two array*/
+    /* Quick sort principe how work
+     * Select the reference element (for example first element in array)
+     * Those elements of the array that are smaller than it put in left part array.
+     * And those elements, that are bigger in right part array
+     * After that array divided to two subarrays.
+     * Each of them can be sorted independently of the other part.
+     * After that this algorithm repeat for these two subarrays.
+     * Repited as long as these subarrays do not be individual elements.
+     * Works well with the cache of modern processors
+     * Subarrays are sorted independently of each other*/
     public static void quickSort(int[] arr, int from, int to) {
-
+        //It is checked whether there is anything to sort
         if (from < to) {
-
+            //Divide array, all element witch less move to left part, and witch bigger to right part
             int divideIndex = partition(arr, from, to);
 
-            quickSort(arr, from, divideIndex - 1);
+            printSortStep(arr, from, to, divideIndex);
 
+            //The function recursively calls itself
+            quickSort(arr, from, divideIndex - 1);
+            //Function for second subarray
             quickSort(arr, divideIndex, to);
         }
     }
@@ -162,9 +211,10 @@ public class SortAlgorithms {
         int rightIndex = to;
         int leftIndex = from;
 
-        int pivot = arr[from + (to - from) / 2];
+        int pivot = arr[from + (to - from) / 2];//Choice the reference element
         while (leftIndex <= rightIndex) {
-
+            //We start the passage through the array
+            // and search element bigger and lower than reference element, and change places
             while (arr[leftIndex] < pivot) {
                 leftIndex++;
             }
@@ -186,6 +236,13 @@ public class SortAlgorithms {
         int tmp = array[index1];
         array[index1] = array[index2];
         array[index2] = tmp;
+    }
+
+    private static void printSortStep(int[] arr, int from, int to, int partitionIndex) {
+        System.out.print(Arrays.toString(arr));
+        System.out.print("\npartition at index: " + partitionIndex);
+        System.out.print(", left: " + Arrays.toString(Arrays.copyOfRange(arr, from, partitionIndex)));
+        System.out.println(", right: " + Arrays.toString(Arrays.copyOfRange(arr, partitionIndex, to + 1)) + "\n");
     }
 
 }
