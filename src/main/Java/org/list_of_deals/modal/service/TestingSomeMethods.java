@@ -10,6 +10,8 @@ public class TestingSomeMethods {
         //Methods in this class
         runFunnyMethods();
 
+        // TODO see and change some data in method 'testingSortMethods()' in class 'WorkWithSortingAlgorithms'
+
         //Work with sort algorithm
         WorkWithSortingAlgorithms.testingSortMethods();
 
@@ -195,7 +197,7 @@ public class TestingSomeMethods {
     }
 
     public static int randomIntFromOneToThousands() {
-        return (int) (Math.random() * 100000);
+        return (int) (Math.random() * 1_000_000);
     }
 
     public static int binarySearch(int[] arr, int search) {
